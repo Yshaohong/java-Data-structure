@@ -1,0 +1,129 @@
+package ListDome;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+/**
+ * @Author: yang
+ * @Description: 扑克牌（52张）
+ * @Date: 2020/8/30 17:10
+ */
+
+
+//扑克牌类
+    //数值：1 2 3 4 5 6 7 8 9 10 11 12 13
+    //花色：♥  ♠  ♦  ♣
+class Card{
+    public String suit;//扑克牌花色
+    public int rank;//扑克牌数值
+
+    public Card(String suit,int rank){
+        this.rank = rank;
+        this.suit = suit;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "suit='" + suit + '\'' +
+                ", rank=" + rank +
+                '}';
+    }
+}
+
+
+
+
+
+public class CardDome {
+
+    public  static  final String[] suits = {"♥","♠","♦","♣"};
+    //购买/获得一副扑克牌
+    public static List<Card> buycard(){
+        List<Card> list = new ArrayList<>();
+        //获得四种花色各13张牌
+        for (int i = 0; i < 4 ; i++) {
+            for (int j = 1; j <=13 ; j++) {
+                String suit = suits[i];
+                int rank = j;
+                Card card = new Card(suit,rank);
+                list.add(card);
+
+            }
+        }
+        return list;
+    }
+
+    //交换两个牌位置（例如下标2和50交换）
+    private  static void swap(List<Card> list,int index,int i){
+     Card tmp = list.get(index);
+     //使用set设置完成交换
+     list.set(index,list.get(i));//面向对象不能用“=”，只能通过方法修改
+     list.set(i,tmp);
+    }
+
+
+    //洗牌
+    public static void shuffle(List<Card> list){
+        //利用下标交换打乱牌的顺序
+        //首先产生随机数
+        Random random = new Random();
+        //反向遍历这副牌
+        for (int i = list.size()- 1;i >0 ; i--) {
+         int index = random.nextInt(i);//找到[0-i)之间的某个值  含义：下标
+         //交换
+            swap(list,index,i);
+
+        }
+
+    }
+
+    //开始摸牌
+
+
+
+    public static void main(String[] args) {
+        //获得牌
+        List<Card> cards = buycard();
+        System.out.println(cards.toString());
+        System.out.println("======================================================");
+        //洗牌
+        shuffle(cards);
+        System.out.println(cards.toString());
+
+        //一共三个人，每个人摸五张牌
+        //1.摸的牌放在哪里
+        //2.怎么样摸牌
+        //实际上是把摸走的那张牌从list中删除
+
+
+        List<List<Card>> hand = new ArrayList<>();
+        //三个人，每个人手里的牌
+        List<Card> hand1 = new ArrayList<>();
+        List<Card> hand2 = new ArrayList<>();
+        List<Card> hand3 = new ArrayList<>();
+        //相当于一个二维数组，hand中0号下标保存的是hand1的牌，hand中1号下标保存的是hand2的牌
+        //hand中2号下标保存的是hand3的牌
+        hand.add(hand1);
+        hand.add(hand2);
+        hand.add(hand3);
+
+        System.out.println("======================================================");
+
+        //轮流摸牌
+        for (int i = 0; i <5 ; i++) {
+            for (int j = 0; j <3 ; j++) {
+                //从hand1开始每摸完一张从cards中删除一张，所以每次摸都是从0号下表开始
+                hand.get(j).add(cards.remove(0));
+
+            }
+        }
+
+        System.out.println("hand1:"+hand1);
+        System.out.println("hand2:"+hand2);
+        System.out.println("hand3:"+hand3);
+
+    }
+
+}
