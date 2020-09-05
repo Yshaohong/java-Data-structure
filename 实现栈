@@ -1,0 +1,73 @@
+package ListDome;
+
+/**
+ * @Author: yang
+ * @Description: //自己实现一个栈
+ * @Date: 2020/9/5 10:43
+ */
+public class MyStack {
+    //创建一个数组
+   private int[] elme;
+   //一个有效数字记录数据的个数   也可以代表当前可以存放数据的下标
+   private int useSize;
+
+   //构造方法
+   public MyStack(){
+       this.elme = new int[10];
+       this.useSize = 0;
+   }
+
+
+    //实现push方法     入栈
+    public void push(int val){
+       //判断是否为满
+        if(inFull()){
+            return;
+        }
+        this.elme[this.useSize]=val;
+        this.useSize++;
+
+    }
+
+    //出栈 实现pop方法   出栈：返回出栈的元素
+    public int pop(){
+
+       if (emply()){
+           //抛出异常
+           throw new RuntimeException("栈为空");
+       }
+       //用来返回被删除的值
+       int data = this.elme[this.useSize-1];
+       this.useSize--;
+       return data;
+    }
+
+    //得到栈顶元素但是不删除 peek
+    public int peek(){
+
+        if (emply()){
+            //抛出异常
+            throw new RuntimeException("栈为空");
+        }
+        //用来返回被删除的值
+        return this.elme[this.useSize-1];
+    }
+
+    //判断栈是否为空
+    public boolean emply(){
+        if(this.useSize==0){
+            return true;
+        }
+       return false;
+    }
+
+    //判断栈是否为满
+    public boolean inFull(){
+       //如果数据个数等于数组的长度就为满
+       if (this.useSize == this.elme.length){
+           return true;
+       }
+       return false;
+    }
+
+    }
