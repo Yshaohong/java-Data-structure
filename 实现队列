@@ -1,0 +1,69 @@
+package ListDome;
+
+/**
+ * @Author: yang
+ * @Description: 实现队列
+ * @Date: 2020/9/5 16:42
+ */
+class Node{
+    public int data;
+    public Node next;
+    public Node(){ }
+    public Node(int data){
+        this.data = data;
+        this.next = null;
+    }
+
+}
+
+
+
+public class QueueDome {
+    //队头
+    public Node front;
+    //队尾
+    public Node rear;
+
+    //添加
+public void offer (int data){
+    Node node = new Node(data);
+    //第一次插入是否为空
+    if (this.front == null){
+       this.front = node;
+       this.rear = node;
+       return;
+    }
+    this.rear.next = node;
+    this.rear = node;
+
+}
+
+//出队列且输出出队列元素的值
+public int pool(){
+    if (emply()){
+        return -1;
+    }
+    int data = this.front.data;
+    this.front=this.front.next;
+    return data;
+}
+
+//出队列
+    public Node peek(){
+        return front.next;
+    }
+
+
+    public boolean emply(){
+    if (this.front == null){
+    return true;
+    }
+    return false;
+    }
+
+
+
+
+
+
+}
