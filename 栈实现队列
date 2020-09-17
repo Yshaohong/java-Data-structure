@@ -1,0 +1,101 @@
+package ListDome;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+/**
+ * @Author: yang
+ * @Description:
+ * @Date: 2020/9/15 11:11
+ */
+public class Qu_Stack {
+
+    Queue<Integer> qu1;
+    Queue<Integer> qu2;
+    int useSize;
+
+    public Qu_Stack(){
+        qu1 = new LinkedList<>();
+        qu2 = new LinkedList<>();
+        this.useSize = 0;
+    }
+
+
+    /** Push element x onto stack. */
+    public void push(int x) {
+    if (!qu1.isEmpty()){
+        qu1.offer(x);
+    }else if (!qu2.isEmpty()){
+        qu2.offer(x);
+    }else {
+        qu1.offer(x);
+    }
+    }
+
+    /** Removes the element on top of the stack and returns that element. */
+    public int pop() {
+    //栈为空
+        if(empty()){
+        throw new RuntimeException("栈为空");
+        }
+
+        int e = 0;
+        if(!qu1.isEmpty()){
+            for (int i = 0; i <this.useSize-1 ; i++) {
+                e = qu1.poll();
+                qu2.offer(e);
+            }
+            e = qu1.poll();
+        }else if (!qu2.isEmpty()){
+            e = qu2.poll();
+            qu1.offer(e);
+        }
+        e = qu2.poll();
+
+        this.useSize--;
+        return e;
+    }
+
+    /** Get the top element. */
+    public int top() {
+     //栈为空
+        if(empty()){
+            throw new RuntimeException("栈为空");
+        }
+
+        int e = 0;
+        if (!qu1.isEmpty()){
+            for (int i = 0; i <this.useSize ; i++) {
+                e = qu1.poll();
+                qu2.offer(e);
+            }
+        }else {
+            for (int i = 0; i <this.useSize ; i++) {
+                e = qu2.poll();
+                qu1.offer(e);
+            }
+        }
+        return e;
+    }
+
+    /** Returns whether the stack is empty. */
+    //判断栈是否为空
+    public boolean empty() {
+        return this.useSize == 0;
+    }
+
+
+    public static void main(String[] args) {
+        Qu_Stack a = new Qu_Stack();
+
+        a.push(1);
+       a.push(2);
+
+       System.out.println(a.toString());
+        //System.out.println(a.pop());
+
+    }
+
+
+
+}
